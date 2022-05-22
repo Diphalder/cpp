@@ -1,0 +1,40 @@
+lld coin_change_way(lld a[],lld n,lld k)//coin array , number of coin , currency
+{
+    lld dp[n][k+1];
+    sort(a,a+n);
+
+    loopN(n)dp[i][0]=1;
+    loopN(n)
+    {
+        loop2(1,k)
+        {
+            if(i==0)
+            {
+                if(j%a[i]==0)
+                {
+                    dp[i][j]=1;
+                }
+                else
+                {
+                    dp[i][j]=0;
+                }
+            }
+            else
+            {
+                if(j<a[i])
+                {
+                    dp[i][j]=dp[i-1][j];
+                }
+                else
+                {
+                   dp[i][j]=dp[i-1][j]+dp[i][j-a[i]];
+
+                }
+
+            }
+
+        }
+    }
+
+    return dp[n-1][k];
+}

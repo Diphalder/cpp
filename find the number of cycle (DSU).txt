@@ -1,0 +1,105 @@
+#include<bits/stdc++.h>
+#define lld         long long int
+#define llf         long double
+#define pb          push_back
+#define mp          make_pair
+#define IN          insert
+#define loopN(n)    for(lld i=0;i<n;i++)
+#define loop(p,n)   for(lld i=p;i<=n;i++)
+#define rloop(p,n)  for(lld i=n;i>=p;i--)
+#define loop2(p,n)  for(lld j=p;j<=n;j++)
+#define all(v)      v.begin(),v.end()
+#define F1          first
+#define F2          second
+#define _MAX        2e18
+#define _FILE       freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);
+#define PI          2*acos(0.0);
+using namespace std;
+
+
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    lld vn,en;
+    cin>>vn>>en;//number of vertex,edge
+    lld edge[en][2];
+
+    loopN(en)cin>>edge[i][0]>>edge[i][1];
+    lld parent[vn];
+
+    loopN(vn)parent[i]=-1;
+
+    lld cycle=0;
+    lld c1,c2,p1,p2;
+
+    loopN(en)
+    {
+
+
+
+        c1=edge[i][0];
+        c2=edge[i][1];
+       // cout<<c1<<"-"<<c2<<"| ";
+        p1=c1;
+        p2=c2;
+        if(parent[c1]>=0)
+        {
+            p1=parent[c1];
+        }
+        if(parent[c2]>=0)
+        {
+            p2=parent[c2];
+        }
+        
+        if(p1==p2)//cycle
+        {
+            cycle++;
+        }
+
+        else
+        {
+            if(parent[p1]<=parent[p2])
+            {
+                parent[p1]--;
+                parent[c2]=p1;
+            }
+            else
+            {
+                parent[p2]--;
+                parent[c1]=p2;
+
+            }
+
+        }
+       // loop2(0,vn-1)cout<<parent[j]<<" ";
+
+    }
+    cout<<"cycle = "<<cycle<<endl;
+
+
+    return 0;
+}
+
+/*
+8
+11
+0 2
+0 1
+1 3
+1 4
+2 3
+4 6
+4 5
+5 7
+6 7
+4 3
+3 6
+
+
+
+*/
+
+

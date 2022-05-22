@@ -1,0 +1,120 @@
+void heapify(lld arr[],lld id[], lld n, lld i)
+{
+    lld largest = i;
+    lld l = 2*i + 1;
+    lld r = 2*i + 2;
+
+    if (l < n && arr[l] > arr[largest])
+        largest = l;
+
+    if (r < n && arr[r] > arr[largest])
+        largest = r;
+
+
+    if (largest != i)
+    {
+        swap(arr[i], arr[largest]);
+        swap(id[i], id[largest]);
+
+        heapify(arr,id, n, largest);
+    }
+}
+
+void heapSort(lld arr[],lld id[],lld n)
+{
+
+    for (lld i = n / 2 - 1; i >= 0; i--)
+        heapify(arr,id, n, i);
+
+
+    for (lld i=n-1; i>0; i--)
+    {
+
+        swap(arr[0], arr[i]);
+        swap(id[0], id[i]);
+
+        heapify(arr,id, i, 0);
+    }
+}
+
+lld knapsack01(lld w[],lld c[],lld n,lld k)// array , size of array  , sum
+{
+    lld dp[n][k+1];
+
+
+    heapSort(w,c,n);
+
+    loopN(n)dp[i][0]=0;
+    loopN(n)
+    {
+        loop2(1,k)
+        {
+            if(i==0)
+            {
+                if(j>=w[i])
+                {
+                    dp[i][j]=c[i];
+                }
+                else
+                {
+                    dp[i][j]=0;
+                }
+            }
+            else
+            {
+                if(j<w[i])
+                {
+                    dp[i][j]=dp[i-1][j];
+                }
+                else
+                {
+
+                    dp[i][j]=max(dp[i-1][j],c[i]+dp[i-1][j-w[i]]);
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+
+    lld v=dp[n-1][k];
+    lld nn=n-1,kk=k;
+
+    bool z[n];
+    loopN(n)z[i]=0;
+
+    rloop(0,n-1)
+    {
+        if(i==0)
+        {
+            z[i]=dp[i][kk];
+        }
+        else
+        {
+            if(dp[i][kk]!=dp[i-1][kk])
+            {
+                z[i]=1;
+                kk-=w[i];
+                i++;
+            }
+
+        }
+        if(kk<=0)
+            break;
+
+
+    }
+    loopN(n)
+    {
+        cout<<z[i]<<" ";//sorted weight wise order
+    }
+    cout<<endl;
+
+    return dp[n-1][k];//maximum profit
+
+}

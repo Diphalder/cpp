@@ -1,0 +1,90 @@
+void subset_sum(lld a[],lld n,lld k)// array , size of array  , sum
+{
+    bool dp[n][k+1];
+    sort(a,a+n);
+
+    loopN(n)dp[i][0]=1;
+    loopN(n)
+    {
+        loop2(1,k)
+        {
+            if(i==0)
+            {
+                if(j==a[i])
+                {
+                    dp[i][j]=1;
+                }
+                else
+                {
+                    dp[i][j]=0;
+                }
+            }
+            else
+            {
+                if(j<a[i])
+                {
+                    dp[i][j]=dp[i-1][j];
+                }
+                else
+                {
+                    if(dp[i-1][j])
+                    {
+                        dp[i][j]=1;
+
+                    }
+                    else
+                    {
+                        dp[i][j]=dp[i-1][j-a[i]];
+
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+
+    if(!dp[n-1][k])
+    {
+        cout<<"DNE\n";
+        return;
+    }
+
+
+    lld v=dp[n-1][k];
+    lld nn=n-1,kk=k;
+
+    bool z[n];
+    loopN(n)z[i]=0;
+
+    rloop(0,n-1)
+    {
+        if(i==0)
+        {
+            z[i]=dp[i][kk];
+        }
+        else
+        {
+            if(dp[i][kk]!=dp[i-1][kk])
+            {
+                z[i]=1;
+                kk-=a[i];
+                i++;
+            }
+
+        }
+        if(kk<=0)
+            break;
+
+
+    }
+    loopN(n)
+    {
+        if(z[i])
+            cout<<a[i]<<" ";
+    }
+    cout<<endl;
+
+}

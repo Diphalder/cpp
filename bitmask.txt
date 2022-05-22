@@ -1,0 +1,8 @@
+lld turnOn(lld mask,lld pos)
+{
+    return mask | (1<<pos);
+}
+bool isOn(lld mask,lld pos)
+{
+    return (bool)(mask & (1<<pos));
+}

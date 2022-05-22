@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+#define lld  long long int
+#define pb   push_back
+#define mp   make_pair
+#define IN   insert
+#define loop(p,n) for(lld i=p;i<n;i++)
+#define looop(p,n) for(lld j=p;j<n;j++)
+#define all(v)      v.begin(),v.end()
+#define f1  first
+#define f2 second
+#define lldMAX 2e62
+#define intMAX 2e18
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    lld n;
+    cin>>n;
+    lld a[n];
+    loop(0,n)
+    {
+        cin>>a[i];
+    }
+    lld sum=0;
+    lld cs[n];
+    loop(0,n)
+    {
+        sum+=a[i];
+        cs[i]=sum;
+    }
+    lld ans=-lldMAX,Start,End;
+    lld p=0,q=0;
+
+    while(p<n&&q<n)
+    {
+        if(p==0)
+        {
+            sum=cs[q];
+        }
+        else
+        {
+            sum=cs[q]-cs[p-1];
+        }
+        ans=max(ans,sum);
+        if(sum==ans)//multiple ans
+        {
+            Start=p;
+            End=q;
+        }
+        if(sum>0&&q<n-1)
+        {
+            q++;
+        }
+        else
+        {
+            p++;
+            if(q<p)
+            {
+                q=p;
+            }
+        }
+
+    }
+    cout<<ans<<endl;
+    cout<<"range["<<Start+1<<","<<End+1<<"]\n";
+
+
+
+    return 0;
+}
+
+/*
+11
+6 -12 8 -2 5 -26 5 -2 8 -10 2
+
+
+
+*/
+
+

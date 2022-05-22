@@ -1,0 +1,115 @@
+#include<bits/stdc++.h>
+#define lld         long long int
+#define pb          push_back
+#define mp          make_pair
+#define IN          insert
+#define loop(p,n)   for(lld i=p;i<n;i++)
+#define looop(p,n)  for(lld j=p;j<n;j++)
+#define all(v)      v.begin(),v.end()
+#define f1          first
+#define f2          second
+#define lldMAX      2e62
+#define intMAX      2e18
+#define ______      ios::sync_with_stdio(false);cin.tie(0);
+#define Run()         cout<<"run\n"
+
+using namespace std;
+
+int main()
+{
+    ______
+    lld vertexN,edgeN;
+    cin>>vertexN>>edgeN;
+    vector<lld>adj[vertexN];
+    lld u,v;
+
+    loop(0,edgeN)
+    {
+        cin>>u>>v;
+        u--;
+        v--;
+        adj[u].pb(v);
+    }
+    map<lld,lld>parent;
+    map<lld,lld>::iterator it;
+
+
+    lld flag[vertexN];
+
+    loop(0,vertexN)flag[i]=-1;//vertex unvisited
+
+    stack<lld>sk;
+    vector<lld>dfs;
+    sk.push(0);
+    dfs.pb(sk.top());
+    parent.IN({0,-1});
+    flag[0]++;
+
+    while(1)
+    {
+        bool f=1;
+        for(int i=0; i<adj[sk.top()].size(); i++)
+        {
+            if(flag[ adj[sk.top()][i] ]==-1)////vertex unvisited
+            {
+                parent.IN({adj[sk.top()][i],sk.top()});
+                flag[adj[sk.top()][i]]++;
+                dfs.push_back(adj[sk.top()][i]);
+                sk.push( adj[sk.top()][i] );
+                f=0;
+                break;
+
+            }
+            if(flag[ adj[sk.top()][i] ]==0)//visited and in stack
+            {//this define the cycle
+
+
+                vector<lld>cycle;
+
+                cycle.pb(sk.top());
+
+                while(cycle[cycle.size()-1]!= adj[sk.top()][i])
+                {
+                     cycle.pb(parent[cycle[cycle.size()-1]]);
+                }
+
+                cout<<"cycle : ";
+                for(lld i=cycle.size()-1;i>=0;i--)
+                {
+                    cout<<cycle[i]<<" ";
+                }
+                cout<<endl;
+
+
+            }
+
+
+        }
+        if(f)
+        {
+            flag[sk.top()]++;//popped from the stack
+            sk.pop();
+        }
+        if(sk.empty())
+        {
+            break;
+        }
+
+    }
+
+    return 0;
+}
+/*
+
+5
+6
+1 2
+2 4
+2 3
+3 1
+4 5
+5 2
+
+*/
+
+
