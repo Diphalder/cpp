@@ -44,52 +44,6 @@ map< , > :: iterator it
 lld fx[]= {1,0,-1, 0,1, 1,-1,-1};
 lld fy[]= {0,1,0,-1,1,-1,1,-1};
 //_______________________________________________
-lld  MOD=1000000007;
-
-lld fact(lld n)
-{
-    if(n==0)
-    {
-        return 1;
-    }
-    if(n==1)
-    {
-        return 1;
-    }
-    else
-    {
-        return ((n%MOD)*fact(n-1))%MOD;
-    }
-
-
-}
-lld modpow(lld x, lld n, lld m)
-{
-    if (n == 0)
-        return 1%m;
-    lld u = modpow(x,n/2,m);
-    u = (u*u)%m;
-    if (n%2 == 1)
-        u = (u*x)%m;
-    return u;
-}
-
-lld nCr(lld n,lld r)
-{
-    lld a=fact(n);
-    lld b = fact(n-r);
-    lld c = fact(r);
-    b=modpow(b,MOD-2,MOD);
-    c=modpow(c,MOD-2,MOD);
-    return ((a%MOD)*((b*c)%MOD))%MOD;
-
-}
-//__________________________________________________
-
-
-//__________________________________________________
-
-
 
 
 void slv()
@@ -108,3 +62,10 @@ int main()
     }
     return 0;
 }
+
+/*
+
+
+
+
+*/
