@@ -1,0 +1,62 @@
+#define mx 100001
+lld a[mx];
+lld tree[mx * 3];
+lld lazy[mx * 3];
+
+
+
+void update(lld node, lld low, lld hi, lld x, lld y, lld val)
+{
+    if(lazy[node] != 0)
+    {
+        // This node needs to be updated
+        tree[node] += (hi - low + 1) * lazy[node];    // Update it
+        if(low != hi)
+        {
+            lazy[node*2] += lazy[node];                  // Mark child as lazy
+            lazy[node*2+1] += lazy[node];                // Mark child as lazy
+        }
+        lazy[node] = 0;                                  // Reset it
+    }
+    if(low > hi or low > y or hi < x)              // Current segment is not within range [l, r]
+        return;
+    if(low >= x and hi <= y)
+    {
+        // Segment is fully within range
+        tree[node] += (hi - low + 1) * val;
+        if(low != hi)
+        {
+            // Not leaf node
+            lazy[node*2] += val;
+            lazy[node*2+1] += val;
+        }
+        return;
+    }
+    lld mid = (low + hi) / 2;
+    update(node*2, low, mid, x, y, val);        // Updating left child
+    update(node*2 + 1, mid + 1, hi, x, y, val);   // Updating right child
+    tree[node] = tree[node*2] + tree[node*2+1];        // Updating root with max value
+}
+
+lld query(lld node, lld low, lld hi, lld x, lld y)
+{
+    if(low > hi or low > y or hi < x)
+        return 0;         // Out of range
+    if(lazy[node] != 0)
+    {
+        // This node needs to be updated
+        tree[node] += (hi - low + 1) * lazy[node];            // Update it
+        if(low != hi)
+        {
+            lazy[node*2] += lazy[node];         // Mark child as lazy
+            lazy[node*2+1] += lazy[node];    // Mark child as lazy
+        }
+        lazy[node] = 0;                 // Reset it
+    }
+    if(low >= x and hi <= y)             // Current segment is totally within range [l, r]
+        return tree[node];
+    lld mid = (low + hi) / 2;
+    lld p1 = query(node*2, low, mid, x, y);         // Query left child
+    lld p2 = query(node*2 + 1, mid + 1, hi, x, y); // Query right child
+    return (p1 + p2);
+}

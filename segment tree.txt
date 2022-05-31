@@ -1,60 +1,44 @@
 #define mx 100001
-int arr[mx];
-int tree[mx * 3];
-void init(int node, int b, int e)
+lld arr[mx];
+lld tree[mx * 3];
+void init(lld node, lld low, lld hi)
 {
-    if (b == e) {
-        tree[node] = arr[b];
+    if (low == hi) {
+        tree[node] = arr[hi];
         return;
     }
-    int Left = node * 2;
-    int Right = node * 2 + 1;
-    int mid = (b + e) / 2;
-    init(Left, b, mid);
-    init(Right, mid + 1, e);
+    lld Left = node * 2;
+    lld Right = node * 2 + 1;
+    lld mid = (low + hi) / 2;
+    init(Left, low, mid);
+    init(Right, mid + 1, hi);
     tree[node] = tree[Left] + tree[Right];
 }
-int query(int node, int b, int e, int i, int j)
+lld query(lld node, lld low, lld hi, lld i, lld j)
 {
-    if (i > e || j < b)
-        return 0; 
-    if (b >= i && e <= j)
-        return tree[node]; 
-    int Left = node * 2; 
-    int Right = node * 2 + 1;
-    int mid = (b + e) / 2;
-    int p1 = query(Left, b, mid, i, j);
-    int p2 = query(Right, mid + 1, e, i, j);
-    return p1 + p2; 
+    if (i > hi || j <low)
+        return 0;
+    if (low >= i && hi<= j)
+        return tree[node];
+    lld Left = node * 2;
+    lld Right = node * 2 + 1;
+    lld mid = (low + hi) / 2;
+    lld p1 = query(Left, low, mid, i, j);
+    lld p2 = query(Right, mid + 1, hi, i, j);
+    return p1 + p2;
 }
-void update(int node, int b, int e, int i, int newvalue)
+void update(lld node, lld low, lld hi, lld i, lld newvalue)
 {
-    if (i > e || i < b)
+    if (i > hi || i < low)
         return;
-    if (b >= i && e <= i) { 
+    if (low >= i && hi <= i) {
         tree[node] = newvalue;
         return;
     }
-    int Left = node * 2; 
-    int Right = node * 2 + 1;
-    int mid = (b + e) / 2;
-    update(Left, b, mid, i, newvalue);
-    update(Right, mid + 1, e, i, newvalue);
+    lld Left = node * 2;
+    lld Right = node * 2 + 1;
+    lld mid = (low + hi) / 2;
+    update(Left, low, mid, i, newvalue);
+    update(Right, mid + 1, hi, i, newvalue);
     tree[node] = tree[Left] + tree[Right];
-}
-int main()
-{
-    READ("in");
-    int n;
-    cin >> n;
-    repl(i, n)
-            cin
-        >> arr[i];
-    init(1, 1, n);
-
-    update(1, 1, n, 2, 0);
-    cout << query(1, 1, n, 1, 3) << endl;
-    update(1, 1, n, 2, 2);
-    cout << query(1, 1, n, 2, 2) << endl;
-    return 0;
 }
