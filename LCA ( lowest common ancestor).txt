@@ -1,0 +1,98 @@
+#define mx 30005
+
+lld L[mx];
+lld sparce[mx][20];
+lld par[mx]; 
+
+
+vector<lld> adj[mx];
+
+lld dfs(lld x , lld prv , lld d )
+{
+    L[x]=d;
+    par[x]=prv;
+    lld v;
+
+    loopN(adj[x].size())
+    {
+        v=adj[x][i];
+
+        if(v!=prv)
+        {
+            dfs(v,x,d+1);
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+lld lca_query(lld N, lld p, lld q)
+{
+      
+        if (L[p] < L[q])
+          {swap(p,q);}
+
+        lld log=1;
+        while(1) 
+        {
+            
+            if((1<<(log+1))>L[p])
+                {
+                    break;
+                }
+            log++;
+        }
+
+        rloop(0,log)
+        {
+            if (L[p] - (1 << i) >= L[q])
+            {
+                p = sparce[p][i];
+            }
+        }
+          
+
+        if (p == q)
+        {
+            return p;
+        }
+        rloop(0,log)
+        {
+            if (sparce[p][i] != -1 && sparce[p][i] != sparce[q][i])
+            {
+                p = sparce[p][i], q = sparce[q][i];   
+            }
+
+        }
+      return par[p];
+}
+
+void LCA_init(lld N)
+  {
+      mem(sparce,-1);
+
+      loopN(N)
+      {
+        sparce[i][0] = par[i];
+      }
+
+      for (lld j = 1; (1 << j) < N; j++)
+         {
+            loopN(N)
+            {
+                if (sparce[i][j - 1] != -1)
+                {
+                    sparce[i][j] = sparce[sparce[i][j - 1]][j - 1];
+                }
+                    
+            }
+
+         }
+                     
+ }

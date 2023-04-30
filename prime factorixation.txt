@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector <int > prime;
+void findPrime (int n)
+{
+    bool a[n+1];
+    for( int i=0; i<=n; i++)
+    {
+        a[i]=1;
+    }
+    for(int i=2; i*i<=n; i++)
+    {
+        if(a[i]==1)
+        {
+            for(int j=i*i; j<=n; j+=i)
+            {
+                a[j]=0;
+            }
+        }
+
+    }
+    for(int i=2; i<=n; i++)
+    {
+        if(a[i])
+        {
+            prime.push_back(i);
+        }
+    }
+
+
+}
+
+
+int main()
+{
+    int n;
+    cin>>n;
+    findPrime(sqrt(n));
+    int numberOfDivisor=1;
+    long long sumOfdivisors= 1;
+
+
+    for(int i=0; i<prime.size(); i++)
+    {
+        int cnt=1;
+        if(n==1)
+        {
+            break;
+        }
+        while(n%prime[i]==0)
+        {
+            cnt++;
+            n/=prime[i];
+            cout<<prime[i]<<" ";
+
+        }
+
+        sumOfdivisors *= (pow(prime[i],cnt)-1)/(prime[i] -1);
+        // geometric series formula 1+ r^1 + r^1 + ..... r^n = (r^(n+1) - 1) /( r - 1)
+
+        numberOfDivisor*=cnt;
+
+    }
+    if(n!=1)
+    {
+        // out of range is also a prime number
+        cout<< n <<endl;
+        numberOfDivisor*=2;
+        sumOfdivisors *= ( pow(n,2)-1 )/( n -1);
+        // geometric series formula 1+ r^1 + r^1 + ..... r^n = (r^(n+1) - 1) /( r - 1)
+
+
+    }
+    cout<<"Number of divisor = "<<numberOfDivisor<<endl;
+    cout<<"Summation of divisors = "<<sumOfdivisors<<endl;
+
+
+
+
+
+
+    return 0;
+}
+

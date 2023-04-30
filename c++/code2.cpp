@@ -30,7 +30,7 @@
 #define nl              cout<<endl
 #define low(a,n,x)      lower_bound(a,a+n,x)-a;
 #define up(a,n,x)       upper_bound(a,a+n,x)-a;
-#define bug(a)          std::cout << #a " -> " << (a) << std::endl; 
+#define bug(a)          std::cout<<setprec(6)<<"\t" << #a " -> " << (a) << std::endl; 
 
 //_______________________________________________
 #define on(m,p)         (m|(1LL<<p))
@@ -54,11 +54,80 @@ lld fy[]= {0,1,0,-1,1,-1,1,-1};
 //_______________________________________________
 
 
+
 void slv()
 {
+    llf x[2],y[2],r[2];
+    loopN(2)
+    {
+        cin>>x[i]>>y[i]>>r[i];
+    }
+
+    if(r[0]<r[1])
+    {
+        swap(x[0],x[1]);
+        swap(y[0],y[1]);
+        swap(r[0],r[1]);
+    }
 
 
 
+
+    llf l=sqrt((x[0]-x[1])*(x[0]-x[1])+(y[0]-y[1])*(y[0]-y[1]));
+
+    if(l>=r[0]+r[1])
+    {
+        cout<<0<<endl;
+    }
+    else if( l + r[1] <= r[0])
+    {
+        cout<<setprec(6)<<pi*r[1]*r[1]<<endl;
+    }
+    else
+    {
+
+        llf k = (l*l + r[0]*r[0] - r[1]*r[1])/(2*l);
+
+       // bug(l);
+       // bug(k);
+        llf a= 2* sqrt (   r[0]*r[0] - k*k );
+
+        llf t1=acos( 1- (a*a)/(2*r[0]*r[0]) );
+        llf t2=acos( 1- (a*a)/(2*r[1]*r[1]) );
+
+
+        if(k>=l)
+        {
+
+            llf ans=pi*r[1]*r[1];
+            ans-= (r[1]*r[1]*t2)/2 - (a*(k-l))/2;
+
+            ans+=  (r[0]*r[0]*t1)/2- (a*k)/2;
+
+           cout<<setprec(6)<<ans<<endl; 
+
+
+
+        }
+        else
+        {
+            llf ans = (r[0]*r[0]*t1)/2;
+            ans += (r[1]*r[1]*t2)/2;
+            ans -= (a*k)/2;
+            ans-= (a*(l-k))/2;
+            cout<<setprec(6)<<ans<<endl;
+        }
+
+
+
+    }
+
+   
+
+
+
+
+    
 
 }
 
@@ -66,9 +135,9 @@ int main()
 {
     ISO;
     lld idx=1;
-    //lld t;cin>>t;while(t--)
+    lld t;cin>>t;while(t--)
     {
-        //case(idx++);
+       case(idx++);
         slv();
     }
     return 0;

@@ -28,16 +28,13 @@
 #define yes             cout<<"YES"
 #define no              cout<<"NO"
 #define nl              cout<<endl
-#define low(a,n,x)      lower_bound(a,a+n,x)-a;
-#define up(a,n,x)       upper_bound(a,a+n,x)-a;
-#define bug(a)          std::cout << #a " -> " << (a) << std::endl; 
 
 //_______________________________________________
-#define on(m,p)         (m|(1LL<<p))
-#define off(m,p)        (~(~m|(1LL<<p)))
-#define ison(m,p)       ((bool)(m&(1LL<<p)))
-#define flip(m,p)       (m^(1LL<<p))
-#define nbitON(p)       ((1LL<<p)-1)
+#define on(m,p)         (m|(1<<p))
+#define off(m,p)        (~(~m|(1<<p)))
+#define ison(m,p)       ((bool)(m&(1<<p)))
+#define flip(m,p)       (m^(1<<p))
+#define nbitON(p)       ((1<<p)-1)
 //_______________________________________________
 using namespace std;
 
@@ -56,6 +53,11 @@ lld fy[]= {0,1,0,-1,1,-1,1,-1};
 
 void slv()
 {
+    lld n;
+    cin>>n;
+    loop(1,n)cout<<i<<" ";
+    cout<<endl;
+
 
 
 

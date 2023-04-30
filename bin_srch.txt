@@ -1,0 +1,23 @@
+lld hi=n-1,lw=0,mid;
+        lld ans=-1;
+        while(lw<=hi)
+        {
+            mid=(hi+lw)/2;
+            if(zlw<k[mid]&&k[mid]<zhi)
+            {
+                ans=mid;
+                break;
+ 
+            }
+ 
+            else if(k[mid]>=zhi)
+            {
+                hi=mid-1;
+                
+            }
+            else if(k[mid]<=zlw)
+            {
+                lw=mid+1;
+            }
+        
+        }

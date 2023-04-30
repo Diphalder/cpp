@@ -1,0 +1,34 @@
+lld const sz=1001;
+
+lld BITree[sz+1][sz+1];
+
+lld getSum(lld x , lld y)
+{
+	lld sum = 0; 
+	x++;
+    y++;
+
+    for(lld i = x; i > 0; i -= i & (-i)) {
+        for(lld j = y; j > 0; j -= j & (-j)) {
+            sum += BITree[i][j];
+        }
+    }
+    return sum;
+}
+
+
+void updateBIT( lld x, lld y , lld val)
+{
+	x++;
+    y++;
+	 for(lld i = x; i <=sz; i += i & (-i)) {
+        for(lld j = y; j <= sz; j += j & (-j)) {
+            BITree[i][j] += val;
+        }
+    }
+}
+
+lld range(lld x1 , lld y1 , lld  x2 , lld y2)
+{
+  return  getSum(x2,y2)-getSum(x2,y1-1)-getSum(x1-1,y2)+getSum(x1-1,y1-1);
+}
