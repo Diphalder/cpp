@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
-#define lld             long long
+#define lld             long long int
 #define llf             long double
-#define ull             signed long long
 #define pb              push_back
 #define mp              make_pair
 #define in              insert
@@ -29,14 +28,16 @@
 #define yes             cout<<"YES"
 #define no              cout<<"NO"
 #define nl              cout<<endl
-#define bug(a)          std::cout << #a " -> " << (a)<<" "; 
+#define low(a,n,x)      lower_bound(a,a+n,x)-a;
+#define up(a,n,x)       upper_bound(a,a+n,x)-a;
+#define bug(a)          std::cout << #a " -> " << (a) << std::endl;
 
 //_______________________________________________
 #define on(m,p)         (m|(1LL<<p))
-#define off(m,p)        (~(~m|(1<<p)))
-#define ison(m,p)       ((bool)(m&1LL<<p))
-#define flip(m,p)       (m^(1<<p))
-#define nbitON(p)       ((1<<p)-1)
+#define off(m,p)        (~(~m|(1LL<<p)))
+#define ison(m,p)       ((bool)(m&(1LL<<p)))
+#define flip(m,p)       (m^(1LL<<p))
+#define nbitON(p)       ((1LL<<p)-1)
 //_______________________________________________
 using namespace std;
 
@@ -53,145 +54,161 @@ lld fy[]= {0,1,0,-1,1,-1,1,-1};
 //_______________________________________________
 
 
-lld num;
-
-lld dp[51][2][2][2];
-
-lld fun(lld x, bool prv , bool z,bool k )
+lld const sz=1e6;
+vector <lld > prime;
+void findPrime (lld n)
 {
-   // bug(x);bug(prv);bug(z);bug(k);nl;
-    lld ans=0;
-    bool ff;
-
-    if(x<0)
+    bool a[n+1];
+    for( lld i=0; i<=n; i++)
     {
-        return k;
+        a[i]=1;
     }
-    retdp(dp[x][prv][z][k]);
-
-
-    if(z==0)
+    for(lld i=2; i*i<=n; i++)
     {
-        ans=fun(x-1 ,ison(num,x) , z , k||(prv && ison(num,x)));
-        if(ison(num,x))
+        if(a[i]==1)
         {
-            ans+=fun(x-1, 0 , 1 , k);
-        }
-        
-    }
-    else
-    {
-        if(k)
-        {
-            ans=pow(2,x+1);
-        }
-        else
-        {
-            ans = fun(x-1 , 0 , z , k );
-            ans+= fun(x-1 , 1 , z , k||prv);
-
+            for(lld j=i*i; j<=n; j+=i)
+            {
+                a[j]=0;
+            }
         }
 
     }
-
-  //  bug(x);bug(prv);bug(z);bug(k);bug(ans);nl;
-
-    return dp[x][prv][z][k]=ans;
-    //return ans;
+    for(lld i=2; i<=n; i++)
+    {
+        if(a[i])
+        {
+            prime.push_back(i);
+        }
+    }
 
 
 }
 
+vector<lld>z[sz+5];
 
 
- 
+lld dp[100000+5][sqrt(100000)+5];
+lld a[sz+5];
+
+lld fun(lld p,lld k)
+{
+
+    set <lld>s;
+    lld ans=0;
+
+    if(k)
+    {
+        loopN(z[a[p]].size())
+        {
+            s
+
+            
+
+
+        }
+
+
+    }
+    else
+    {
+
+
+
+
+    }
+
+    
+
+
+
+
+
+
+
+
+
+}
+
 
 
 void slv()
 {
 
+    lld n,k;
+    cin>>n>>k;
+    loopN(n)cin>>a[i];
 
-    lld z;
-    cin>>z;
 
-    lld hi=1e14,lw=z,mid;
-    lld ans;
 
-    lld dip=-1;
 
-    while(lw<=hi)
-    {
-        mem(dp,-1);
-        mid=(hi+lw)/2;
-        num=mid;
-        ans=fun(50,0,0,0);
 
-        //bug(ans);nl;
 
-        //bug(lw);bug(hi);nl;
 
-        //bug(mid);bug(ans);nl;
 
-      //  cout<<"\t"<<z+ans<<"-"<<mid<<"="<<z+ans-mid;nl;
 
-        
-        if(z+ans<=mid)
-        {
-            dip=mid;
-            hi=mid-1;
-        }
-        else if(z+ans>mid)
-        {
-            lw=mid+1;
-        }
 
-    }
 
-    //bug(dip);nl;
-    lld f=0;
 
-    rloop(0,50)
-    {
-        if(ison(dip,i))
-        {
-            f=1;
-        }
-        if(f)
-        {
-            cout<<ison(dip,i);
-        }
-    
-    }
-    nl;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
 
-
 int main()
 {
-    /*
-     loop(1,20)
-    {
-        mem(dp,-1);
-        num=i;
-        cout<<i<<" "<<fun(50,0,0,0);nl;
-    }
-    
-    */
-
-
-
-
     ISO;
-    lld idx=1;
-    lld t;
-    cin>>t;
-    while(t--)
+    findPrime(sqrt(sz)+50);
+
+
+
+
+    lld p=0;
+    lld k;
+
+    loop(1,sz)
     {
-        case(idx++);
+
+        p=0;
+    
+        //cout<<"i="<<i<<endl;
+
+        while(prime[p]*prime[p]<=i)
+        {
+         
+            if(i%prime[p]==0)
+            {
+                z[i].pb(p);
+                  // cout<<"p="<<prime[p]<<endl;
+            }
+
+        p++;
+        }
+    }
+
+
+
+
+
+
+
+
+    lld idx=1;
+    //lld t;cin>>t;while(t--)
+    {
+        //case(idx++);
         slv();
-        //test();
     }
     return 0;
 }

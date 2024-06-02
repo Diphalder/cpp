@@ -1,0 +1,96 @@
+lld globalTime = 0;
+
+loopN(n)v[i]=1;
+
+void dfsR(lld u) {
+    cout << u << " ";
+    v[u] = 0;             
+    d[u] = globalTime++;  
+
+    loopN(adj[u].size()){
+        lld ad = adj[u][i];
+        if (v[ad]) {  
+            dfsR(ad); 
+        }
+    }
+    f[u] = globalTime++; 
+}
+
+
+##################################### 
+
+void dfs(lld st)
+{
+    stack<lld> stk;
+    bool visit[n];
+
+    loopN(n)visit[i]=1;
+
+    lld cur = st;
+    stk.push(cur);
+
+    lld u;
+    while(!stk.empty())
+    {
+        cur =stk.top();
+        stk.pop();
+        if(visit[cur])
+        {
+            visit[cur]=0;
+            cout<<cur<<" ";
+        }
+
+
+        loopN(adj[cur].size())
+        {
+            u=adj[cur][i];
+            if(visit[u])
+            {
+                stk.push(u);
+
+            }
+
+        }
+      
+
+    }
+    cout<<endl;
+
+}
+
+########################################
+
+
+void bfs(lld st)
+{
+    queue<lld> stk;
+
+    lld cur = st;
+    stk.push(cur);
+
+    bool visit[n];
+    loopN(n)visit[i]=1;
+    lld u;
+    while(!stk.empty())
+    {
+        cur =stk.front();
+        stk.pop();
+
+        cout<<cur<<" ";
+        loopN(adj[cur].size())
+        {
+            u=adj[cur][i];
+            if(visit[u])
+            {
+                stk.push(u);
+                visit[u]=0;
+
+            }
+
+        }
+
+    }
+    cout<<endl;
+
+
+}

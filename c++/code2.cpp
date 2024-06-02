@@ -30,7 +30,7 @@
 #define nl              cout<<endl
 #define low(a,n,x)      lower_bound(a,a+n,x)-a;
 #define up(a,n,x)       upper_bound(a,a+n,x)-a;
-#define bug(a)          std::cout<<setprec(6)<<"\t" << #a " -> " << (a) << std::endl; 
+#define bug(a)          std::cout << #a " -> " << (a) << std::endl;
 
 //_______________________________________________
 #define on(m,p)         (m|(1LL<<p))
@@ -55,89 +55,85 @@ lld fy[]= {0,1,0,-1,1,-1,1,-1};
 
 
 
-void slv()
+lld dp[125][5000][5000];
+lld a[125];
+lld z;
+lld n;
+lld m;
+bool fun(lld p , lld x , lld y)
 {
-    llf x[2],y[2],r[2];
-    loopN(2)
+
+    retdp(dp[p][x][y]);
+
+    if(p==z)
     {
-        cin>>x[i]>>y[i]>>r[i];
-    }
+        if(x==m&&y==m)
+        {
+            return 1;
+            }
+        else
+        {
+            return 0;
 
-    if(r[0]<r[1])
-    {
-        swap(x[0],x[1]);
-        swap(y[0],y[1]);
-        swap(r[0],r[1]);
-    }
-
-
-
-
-    llf l=sqrt((x[0]-x[1])*(x[0]-x[1])+(y[0]-y[1])*(y[0]-y[1]));
-
-    if(l>=r[0]+r[1])
-    {
-        cout<<0<<endl;
-    }
-    else if( l + r[1] <= r[0])
-    {
-        cout<<setprec(6)<<pi*r[1]*r[1]<<endl;
+        }
     }
     else
     {
+        dp[p][x][y]=fun(p+1,x+a[p],y)||fun(p+1,x,y+a[p])||fun(p+1,x,y);
+        return dp[p][x][y];
 
-        llf k = (l*l + r[0]*r[0] - r[1]*r[1])/(2*l);
-
-       // bug(l);
-       // bug(k);
-        llf a= 2* sqrt (   r[0]*r[0] - k*k );
-
-        llf t1=acos( 1- (a*a)/(2*r[0]*r[0]) );
-        llf t2=acos( 1- (a*a)/(2*r[1]*r[1]) );
+    }
 
 
-        if(k>=l)
+
+
+
+
+
+
+
+
+
+
+}
+
+void slv()
+{
+    cin>>n;
+    loopN(n)cin>>a[i];
+
+    loopN(n)
+    {
+        z=i;
+        lld k=0;
+        mem(dp,-1);
+        loopN2(i)k+=a[i];
+        if(k%3==0)
         {
+            m=k/3;
 
-            llf ans=pi*r[1]*r[1];
-            ans-= (r[1]*r[1]*t2)/2 - (a*(k-l))/2;
-
-            ans+=  (r[0]*r[0]*t1)/2- (a*k)/2;
-
-           cout<<setprec(6)<<ans<<endl; 
-
-
+            cout<<fun(0,a[0],0)||fun(0,0,a[0])||fun(0,0,0);
+            cout<<endl;
 
         }
         else
         {
-            llf ans = (r[0]*r[0]*t1)/2;
-            ans += (r[1]*r[1]*t2)/2;
-            ans -= (a*k)/2;
-            ans-= (a*(l-k))/2;
-            cout<<setprec(6)<<ans<<endl;
+            cout<<0<<endl;
         }
-
-
 
     }
 
-   
-
-
-
-
-    
 
 }
 
 int main()
 {
+
     ISO;
     lld idx=1;
     lld t;cin>>t;while(t--)
     {
-       case(idx++);
+        //case(idx++);
         slv();
     }
     return 0;
