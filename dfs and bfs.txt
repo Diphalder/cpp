@@ -61,36 +61,38 @@ void dfs(lld st)
 ########################################
 
 
-void bfs(lld st)
+lld level[100];
+
+void bfs_(lld s)
 {
-    queue<lld> stk;
+    queue<lld> Q;
 
-    lld cur = st;
-    stk.push(cur);
+    loopN(n)level[i]=INF;
 
-    bool visit[n];
-    loopN(n)visit[i]=1;
-    lld u;
-    while(!stk.empty())
+    Q.push(s);
+    lld u=s;
+    level[s]=0;
+    //cout<<"BFS = ";
+    while(!Q.empty())
     {
-        cur =stk.front();
-        stk.pop();
-
-        cout<<cur<<" ";
-        loopN(adj[cur].size())
+        u=Q.front();
+        Q.pop();
+        //cout<<u<<" ";
+        loopN(adj[u].size())
         {
-            u=adj[cur][i];
-            if(visit[u])
+           lld v=adj[u][i];
+            if(level[v]==INF)
             {
-                stk.push(u);
-                visit[u]=0;
+                level[v] = level[u] + 1;
+                Q.push(v);
 
             }
 
         }
 
-    }
-    cout<<endl;
 
+    }
+    //cout<<endl;
+    //loopN(n)cout<<i<<" "<<level[i]<<endl;
 
 }

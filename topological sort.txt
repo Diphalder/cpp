@@ -1,0 +1,27 @@
+stack<lld>stk;
+bool visit[105];
+
+void dfs(lld u)
+{
+    visit[u]=0;
+    loopN(adj[u].size())
+    {
+        lld v=adj[u][i];
+        if(visit[v])
+        {
+            dfs(v);
+
+        }
+
+    }
+    stk.push(u);
+
+}
+
+while(!stk.empty())
+        {
+            cout<<stk.top()+1<<" ";  // topological sorted order // which task need to do first
+            stk.pop();
+
+        }
+        cout<<endl;
