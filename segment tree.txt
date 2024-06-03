@@ -42,3 +42,10 @@ void update(lld node, lld low, lld hi, lld i, lld newvalue)
     update(Right, mid + 1, hi, i, newvalue);
     tree[node] = tree[Left] + tree[Right];
 }
+
+
+indexing 1-n
+node arr [1,n]
+lld query(1,1,n, i, j)
+void update(1,1,n,i,newvalue)
+

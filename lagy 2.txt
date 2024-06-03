@@ -1,3 +1,11 @@
+
+//indexing 1-n
+//node arr [1,n]
+//lld query(1,1,n, i, j)
+//void update(1,1,n,i,j,newvalue)
+
+
+
 #define mx 100001
 lld a[mx];
 lld tree[mx * 3];
@@ -18,9 +26,9 @@ void update(lld node, lld low, lld hi, lld x, lld y, lld val)
         }
         lazy[node] = 0;                                  // Reset it
     }
-    if(low > hi or low > y or hi < x)              // Current segment is not within range [l, r]
+    if(low > hi || low > y || hi < x)              // Current segment is not within range [l, r]
         return;
-    if(low >= x and hi <= y)
+    if(x <= low && hi <= y)
     {
         // Segment is fully within range
         tree[node] += (hi - low + 1) * val;
@@ -40,7 +48,7 @@ void update(lld node, lld low, lld hi, lld x, lld y, lld val)
 
 lld query(lld node, lld low, lld hi, lld x, lld y)
 {
-    if(low > hi or low > y or hi < x)
+    if(low > hi || low > y || hi < x)
         return 0;         // Out of range
     if(lazy[node] != 0)
     {
@@ -53,7 +61,7 @@ lld query(lld node, lld low, lld hi, lld x, lld y)
         }
         lazy[node] = 0;                 // Reset it
     }
-    if(low >= x and hi <= y)             // Current segment is totally within range [l, r]
+    if(x <= low && hi <= y)            // Current segment is totally within range [l, r]
         return tree[node];
     lld mid = (low + hi) / 2;
     lld p1 = query(node*2, low, mid, x, y);         // Query left child
