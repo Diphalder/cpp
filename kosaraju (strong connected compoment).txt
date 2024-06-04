@@ -1,0 +1,121 @@
+const lld mx = 30;
+lld n;
+vector<lld> adj[mx];
+vector<lld> adj2[mx];
+bool visit[mx];
+stack<lld> sk;
+
+vector < vector <lld> >compo;
+vector<lld>cmp;
+
+void dfs(lld u)
+{
+    visit[u]=0;
+    for (lld v:adj[u])
+    {
+        if(visit[v])
+        {
+            dfs(v);
+        }
+    }
+    sk.push(u);
+
+}
+
+
+
+void dfs2(lld u)
+{
+    visit[u]=0;
+    cmp.pb(u);
+    for (lld v:adj2[u])
+    {
+        if(visit[v])
+        {
+            dfs2(v);
+        }
+
+    }
+
+}
+
+
+
+
+
+void kosaraju_SSC()
+{
+    //init
+    compo.clear();
+    //dfs1
+    mem(visit,1);
+
+    loop(1,n)
+    {
+        if(visit[i])
+        {
+            dfs(i);
+        }
+
+    }
+
+    //topological sort
+    vector<lld > topo;
+    while(!sk.empty())
+    {
+        topo.pb(sk.top());
+        sk.pop();
+    }
+
+    //transpose adj
+    loop(1,n)
+    {
+        adj2[i].clear();
+    }
+
+    loop(1,n)
+    {
+
+        for (lld j:adj[i])
+        {
+            adj2[j].pb(i);
+        }
+
+    }
+
+
+
+
+    // dfs2
+    mem(visit,1);
+
+    for(lld u:  topo)
+    {
+        if(visit[u])
+        {
+            dfs2(u);
+            compo.pb(cmp);
+            cmp.clear();
+        }
+    }
+
+
+}
+
+//___________________________
+
+
+       loopN(compo.size())
+        {
+            loopN2(compo[i].size())
+            {
+                cout<<compo[i][j];
+                if(j!=compo[i].size()-1)
+                {
+                    cout<<", ";
+                }
+
+            }
+            cout<<endl;
+
+        }

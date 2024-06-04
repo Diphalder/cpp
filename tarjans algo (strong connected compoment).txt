@@ -1,7 +1,8 @@
 const lld mx = 30;
+const lld mx =10005;
 lld n;
 vector<lld> adj[mx];
-bool visited[mx];
+bool onStack[mx];
 lld dfs_low[mx];
 lld foundAt[mx];
 lld gt = 0;
@@ -11,7 +12,8 @@ vector < vector <lld> >compo;
 
 void dfsTarjan(lld u)
 {
-    visited[u] = 1;
+
+    onStack[u] = 1;
     dfs_low[u] = foundAt[u] = gt++;
     st.push(u);
 
@@ -21,7 +23,7 @@ void dfsTarjan(lld u)
         {
             dfsTarjan(v);
         }
-        if (visited[v])   // on stack
+        if (onStack[v])   // on stack
         {
             dfs_low[u] = min(dfs_low[u], dfs_low[v]);
         }
@@ -29,12 +31,13 @@ void dfsTarjan(lld u)
 
     if (dfs_low[u] == foundAt[u])
     {
+
         vector<lld>c;
         while (!st.empty())
         {
             lld v = st.top();
             st.pop();
-            visited[v] = 0;
+            onStack[v] = 0;
             c.pb(v);
             if (v == u) break;
         }
@@ -45,7 +48,7 @@ void dfsTarjan(lld u)
 void tarjanSCC()
 {
     compo.clear();
-    mem(visited,false);
+    mem(onStack,false);
     mem(dfs_low,-1);
     mem(foundAt,-1);
     gt = 0;
@@ -59,7 +62,6 @@ void tarjanSCC()
         }
     }
 }
-
 //#################
 
 
