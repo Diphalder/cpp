@@ -28,13 +28,16 @@
 #define yes             cout<<"YES"
 #define no              cout<<"NO"
 #define nl              cout<<endl
+#define low(a,n,x)      lower_bound(a,a+n,x)-a;
+#define up(a,n,x)       upper_bound(a,a+n,x)-a;
+#define bug(a)          std::cout << #a " -> " << (a) << std::endl;
 
 //_______________________________________________
-#define on(m,p)         (m|(1<<p))
-#define off(m,p)        (~(~m|(1<<p)))
-#define ison(m,p)       ((bool)(m&(1<<p)))
-#define flip(m,p)       (m^(1<<p))
-#define nbitON(p)       ((1<<p)-1)
+#define on(m,p)         (m|(1LL<<p))
+#define off(m,p)        (~(~m|(1LL<<p)))
+#define ison(m,p)       ((bool)(m&(1LL<<p)))
+#define flip(m,p)       (m^(1LL<<p))
+#define nbitON(p)       ((1LL<<p)-1)
 //_______________________________________________
 using namespace std;
 
@@ -50,15 +53,76 @@ lld fx[]= {1,0,-1, 0,1, 1,-1,-1};
 lld fy[]= {0,1,0,-1,1,-1,1,-1};
 //_______________________________________________
 
+vector <lld > prime;
+
+lld const mx= 1125;
+
+
+void findPrime (lld n)
+{
+    bool a[n+1];
+
+    loop(0,n)
+    {
+        a[i]=1;
+    }
+    for(lld i=2; i*i<=n; i++)
+    {
+        if(a[i]==1)
+        {
+            for(lld j=i*i; j<=n; j+=i)
+            {
+                a[j]=0;
+            }
+        }
+
+    }
+    loop(2,n)
+    {
+        if(a[i])
+        {
+            prime.push_back(i);
+        }
+    }
+}
+
+lld n,k;
+lld dp[190][16][mx];
+
+lld fun(lld x , lld p , lld sum)
+{
+    //cout<<x<<" "<<p<<" "<<sum<<endl;
+
+    if(sum==n && p ==k)
+    {
+        return 1;
+    }
+    if(x>=prime.size() ||sum>n || p> k )
+    {
+        return 0;
+    }
+    retdp(dp[x][p][sum]);
+
+    return dp[x][p][sum]=fun(x+1,p,sum)+fun(x+1,p+1,sum+prime[x]);
+
+}
+
+
 
 void slv()
 {
-    lld n;
-    cin>>n;
-    loop(1,n)cout<<i<<" ";
-    cout<<endl;
+    while(1)
+    {
+        cin>>n>>k;
+        if(n==0&&k==0)
+        {
+            break;
+        }
+        mem(dp,-1);
+        cout<<"\tans=";
+        cout<<fun(0,0,0)<<endl;;
 
-
+    }
 
 
 
@@ -70,6 +134,7 @@ int main()
     lld idx=1;
     //lld t;cin>>t;while(t--)
     {
+        findPrime(mx);
         //case(idx++);
         slv();
     }
@@ -79,6 +144,22 @@ int main()
 /*
 
 
+24 3
+24 2
+2 1
+1 1
+4 2
+18 3
+17 1
+17 3
+17 4
+100 5
+1000 10
+1120 14
+0 0
+
+
 
 
 */
+

@@ -1,0 +1,20 @@
+    int t;
+    cin >> t;
+    cin.ignore(); // Ignore the newline after the number of test cases
+
+    loopN(t)
+    {
+        string line;
+        getline(cin, line);
+
+        stringstream lineStream(line);
+        int val;
+        vector<lld> aa;
+
+        while (lineStream >> val)
+        {
+            aa.pb(val);
+        }
+
+        v.pb(aa);
+    }
