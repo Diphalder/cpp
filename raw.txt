@@ -40,7 +40,9 @@
 #define flip(m,p)       (m^(1LL<<p))
 #define nbitON(p)       ((1LL<<p)-1)
 //__________Fenwick Tree__________________________
-#define flipLastBit(n)	n=n-(n&-n) 
+#define rmvLastBit(n)   n=n-(n&-n)
+#define child_node(n)   n=n-(n&-n)	
+#define par_node(n)     n=n+(n&-n)
 //_______________________________________________
 using namespace std;
 
