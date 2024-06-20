@@ -2,9 +2,13 @@
 #define lld             long long int
 #define llf             long double
 #define pb              push_back
+#define pushf(v,a)	v.insert(v.begin(), a)
+#define popf(v)		v.erase(v.begin())
 #define popb            pop_back
 #define mp              make_pair
 #define in              insert
+#define minheap 	priority_queue<lld, vector<lld>, greater<lld>>
+#define maxheap 	priority_queue<lld>
 #define loopN(n)        for(lld i=0;i<n;i++)
 #define loopN2(n)       for(lld j=0;j<n;j++)
 #define loop(p,n)       for(lld i=p;i<=n;i++)
