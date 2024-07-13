@@ -1,0 +1,48 @@
+lld const sz = 3e5 + 10;
+vector<lld> ad[sz];
+
+lld gtime = 0;
+
+lld tin[sz]; // discovery time
+lld low[sz]; // lowest time
+
+map<pii, lld> isbridge;
+// find the bridge
+
+void bridge_find(lld u, lld last)
+{
+    tin[u] = gtime++;
+    low[u] = tin[u];
+    for (lld v : ad[u])
+    {
+        if(v==last)
+        {
+            continue;
+        }
+        if (tin[v] != -1)
+        {
+            low[u] = min(low[u], tin[v]); // back edge find
+	// low[u] = min(low[u], low[v]);  // also work
+
+        }
+        else
+        {
+            bridge_find(v, u);
+
+            low[u] = min(low[u], low[v]); // child has better path
+
+            if (tin[u] < low[v]) // cant reach the child back
+            {
+                isbridge[mp(u, v)] = 1;
+                isbridge[mp(v, u)] = 1;
+            }
+        }
+    }
+}
+
+
+
+mem(tin, -1);
+mem(low, -1);
+
+bridge_find(0, -1);

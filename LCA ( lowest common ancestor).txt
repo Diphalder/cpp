@@ -7,7 +7,7 @@ lld par[mx];
 
 vector<lld> adj[mx];
 
-lld dfs(lld x , lld prv , lld d )
+lld dfs(lld x , lld prv , lld d=1)
 {
     L[x]=d;
     par[x]=prv;
@@ -28,15 +28,15 @@ lld dfs(lld x , lld prv , lld d )
 
 
 
-
-
-
-
 lld lca_query(lld N, lld p, lld q)
 {
       
         if (L[p] < L[q])
-          {swap(p,q);}
+	{
+	   swap(p,q);
+	}
+	//L[p] is large
+
 
         lld log=1;
         while(1) 
@@ -66,12 +66,16 @@ lld lca_query(lld N, lld p, lld q)
         {
             if (sparce[p][i] != -1 && sparce[p][i] != sparce[q][i])
             {
-                p = sparce[p][i], q = sparce[q][i];   
+                p = sparce[p][i];
+		q = sparce[q][i];   
             }
 
         }
       return par[p];
 }
+
+
+
 
 void LCA_init(lld N)
   {
