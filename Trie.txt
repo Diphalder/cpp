@@ -1,0 +1,90 @@
+class Trie
+{
+
+public:
+    bool find;
+    Trie *nxt[26];
+
+    Trie()
+    {
+
+        find = 0;
+
+        loopN(26)
+        {
+            nxt[i] = nullptr;
+        }
+    }
+
+    void insert(string word)
+    {
+
+        lld x;
+        Trie *cur = this;
+
+        for (auto a : word)
+        {
+            x = a - 'a';
+            if (cur->nxt[x] != nullptr)
+            {
+                cur = cur->nxt[x];
+            }
+            else
+            {
+                cur->nxt[x] = new Trie();
+                cur = cur->nxt[x];
+            }
+        }
+        cur->find = 1;
+    }
+
+    bool search(string word)
+    {
+
+        lld x;
+        Trie *cur = this;
+
+        for (auto a : word)
+        {
+            x = a - 'a';
+            if (cur->nxt[x] != nullptr)
+            {
+                cur = cur->nxt[x];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        return cur->find;
+    }
+
+    bool startsWith(string prefix)
+    {
+
+        lld x;
+        Trie *cur = this;
+
+        for (auto a : prefix)
+        {
+            x = a - 'a';
+            if (cur->nxt[x] != nullptr)
+            {
+                cur = cur->nxt[x];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
